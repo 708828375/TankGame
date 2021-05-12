@@ -22,7 +22,7 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
 
     //敌人的坦克，放入到集合中---考虑到多线程问题，所以此处使用Vector
     Vector<enemyTank> enemyTanks = new Vector<>();
-    private int tankSize = 3; //指定敌人坦克的数量
+    private int tankSize = 6; //指定敌人坦克的数量
 
     //定义一个数组来存放炸弹
     Vector<Bomb> bombs = new Vector<>();
@@ -40,6 +40,8 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
         //初始化敌人的坦克
         for (int i = 0; i < tankSize; i++) {
             enemyTank enemyTank = new enemyTank(100 * (i + 1), 0);
+            //将所有的敌人坦克信息设置给每一个敌人坦克
+            enemyTank.setEnemyTanks(enemyTanks);
             enemyTank.setDirection(2);//设置方向向下
             //启动敌人坦克线程，让敌人坦克自由移动
             new Thread(enemyTank).start();
@@ -185,7 +187,7 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
             Vector<Shot> shots = enemyTank.shots;
             for (int j = 0; j < shots.size(); j++) {
                 Shot shot = shots.get(j);
-                hitTank(shot,tank);
+                hitTank(shot, tank);
             }
         }
 
