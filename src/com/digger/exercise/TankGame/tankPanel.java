@@ -22,7 +22,7 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
 
     //敌人的坦克，放入到集合中---考虑到多线程问题，所以此处使用Vector
     Vector<enemyTank> enemyTanks = new Vector<>();
-    private int tankSize = 6; //指定敌人坦克的数量
+    private int tankSize = 3; //指定敌人坦克的数量
 
     //定义一个数组来存放炸弹
     Vector<Bomb> bombs = new Vector<>();
@@ -34,7 +34,7 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
 
     public tankPanel() {
         //初始化自己的坦克
-        tank = new myTank(100, 100);
+        tank = new myTank(40, 100);
         //设置坦克速度
         //tank.setSpeed(5);
         //初始化敌人的坦克
@@ -59,10 +59,28 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
         bombImage3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
     }
 
+    //显示游戏相关信息
+    public void showInfo(Graphics g) {
+        //绘制提示信息
+        g.setColor(Color.BLACK);
+        //设置字体
+        Font font = new Font("宋体", Font.BOLD, 25);
+        g.setFont(font);
+        g.drawString("您累积击毁敌方坦克", 1020, 30);
+        //绘制一个敌方坦克
+        drawTank(1020, 50, g, 0, 1);
+        //显示击毁敌人坦克的数量
+        g.setColor(Color.BLACK);
+        g.drawString(Recorder.getAllEnemyTankNum() + "", 1080, 85);
+    }
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         g.fillRect(0, 0, 1000, 750);//默认黑色填充背景
+
+        //显示摧毁敌方坦克的提示信息
+        showInfo(g);
 
         if (tank != null && tank.isLive()) {
             //绘制自己的坦克--封装方法
@@ -202,6 +220,11 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
                     //子弹击中坦克
                     shot.setLive(false);
                     tank.setLive(false);
+                    //击中敌方坦克时，allEnemyTankNum++
+                    if (tank instanceof enemyTank) {
+                        //被击中的是敌方坦克
+                        Recorder.addAllEnemyTankNum();
+                    }
                     //击中敌方坦克时，将被击中的敌方坦克删除
                     enemyTanks.remove(tank);
                     //子弹击中坦克时，创建一个炸弹对象放入bombs中
@@ -215,6 +238,11 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
                     //子弹击中坦克
                     shot.setLive(false);
                     tank.setLive(false);
+                    //击中敌方坦克时，allEnemyTankNum++
+                    if (tank instanceof enemyTank) {
+                        //被击中的是敌方坦克
+                        Recorder.addAllEnemyTankNum();
+                    }
                     //击中敌方坦克时，将被击中的敌方坦克删除
                     enemyTanks.remove(tank);
                     //子弹击中坦克时，创建一个炸弹对象放入bombs中
