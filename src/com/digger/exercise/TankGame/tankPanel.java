@@ -33,8 +33,10 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
     private Image bombImage3 = null;
 
     public tankPanel() {
+        //将enemyTanks赋值给Recorder的enemyTanks
+        Recorder.setEnemyTanks(enemyTanks);
         //初始化自己的坦克
-        tank = new myTank(40, 100);
+        tank = new myTank(400, 100);
         //设置坦克速度
         //tank.setSpeed(5);
         //初始化敌人的坦克
