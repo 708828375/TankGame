@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.Vector;
 
 /**
@@ -35,6 +36,17 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
     private Image bombImage3 = null;
 
     public tankPanel(String key) {
+        //判断记录文件是否存在
+        //若存在，正常运行，不存在,提示只能开始新游戏
+        File file = new File(Recorder.getFileName());
+        if (file.exists()){//文件存在
+            //继续游戏，就进行数据恢复
+            nodes = Recorder.getNodesAndMyTankAndGrades();
+            tank = Recorder.getMyTank();
+        }else {
+            System.out.println("文件不存在，只能开始新游戏");
+            key = "1";
+        }
         //将enemyTanks赋值给Recorder的enemyTanks
         Recorder.setEnemyTanks(enemyTanks);
 
@@ -63,9 +75,6 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
                 }
                 break;
             case "2"://继续上局游戏
-                //继续游戏，就进行数据恢复
-                nodes = Recorder.getNodesAndMyTankAndGrades();
-                tank = Recorder.getMyTank();
                 //初始化敌人的坦克
                 for (int i = 0; i < nodes.size(); i++) {
                     Node node = nodes.get(i);
@@ -91,6 +100,9 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
         bombImage1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_1.gif"));
         bombImage2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
         bombImage3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
+
+        //播放游戏音乐
+        new AePlayWave("src\\111.wav").run();
     }
 
     //显示游戏相关信息

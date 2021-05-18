@@ -14,7 +14,7 @@ public class Recorder {
     //记录我方坦克击毁的敌人坦克数
     private static int allEnemyTankNum = 0;
     //数据写入文件存储位置
-    private static String fileName = "e:\\myRecord.txt";
+    private static String fileName = "src\\myRecord.txt";
 
     //定义一个Vector来保存要存储的敌人坦克信息
     private static Vector<enemyTank> enemyTanks = null;
@@ -27,6 +27,10 @@ public class Recorder {
 
     private static BufferedWriter bw = null;
     private static BufferedReader br = null;
+
+    public static String getFileName() {
+        return fileName;
+    }
 
     public static void setMyTank(com.digger.exercise.TankGame.myTank myTank) {
         Recorder.myTank = myTank;
