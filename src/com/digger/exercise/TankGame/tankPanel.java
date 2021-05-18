@@ -22,6 +22,8 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
 
     //敌人的坦克，放入到集合中---考虑到多线程问题，所以此处使用Vector
     Vector<enemyTank> enemyTanks = new Vector<>();
+    //存放恢复敌人坦克信息的Vector
+    Vector<Node> nodes = null;
     private int tankSize = 3; //指定敌人坦克的数量
 
     //定义一个数组来存放炸弹
@@ -32,27 +34,57 @@ public class tankPanel extends JPanel implements KeyListener, Runnable {
     private Image bombImage2 = null;
     private Image bombImage3 = null;
 
-    public tankPanel() {
+    public tankPanel(String key) {
         //将enemyTanks赋值给Recorder的enemyTanks
         Recorder.setEnemyTanks(enemyTanks);
-        //初始化自己的坦克
-        tank = new myTank(400, 100);
-        //设置坦克速度
-        //tank.setSpeed(5);
-        //初始化敌人的坦克
-        for (int i = 0; i < tankSize; i++) {
-            enemyTank enemyTank = new enemyTank(100 * (i + 1), 0);
-            //将所有的敌人坦克信息设置给每一个敌人坦克
-            enemyTank.setEnemyTanks(enemyTanks);
-            enemyTank.setDirection(2);//设置方向向下
-            //启动敌人坦克线程，让敌人坦克自由移动
-            new Thread(enemyTank).start();
-            enemyTanks.add(enemyTank);
-            //创建敌人坦克的同时创建子弹
-            Shot shot = new Shot(enemyTank.getX() + 20, enemyTank.getY() + 60, enemyTank.getDirection());
-            enemyTank.shots.add(shot);
-            //启动子弹线程
-            new Thread(shot).start();
+
+        switch (key) {
+            case "1"://开始新游戏
+                //初始化自己的坦克
+                tank = new myTank(400, 100);
+                //将我方坦克赋给Recorder的myTank
+                Recorder.setMyTank(tank);
+                //设置坦克速度
+                //tank.setSpeed(5);
+                //初始化敌人的坦克
+                for (int i = 0; i < tankSize; i++) {
+                    enemyTank enemyTank = new enemyTank(100 * (i + 1), 0);
+                    //将所有的敌人坦克信息设置给每一个敌人坦克
+                    enemyTank.setEnemyTanks(enemyTanks);
+                    enemyTank.setDirection(2);//设置方向向下
+                    //启动敌人坦克线程，让敌人坦克自由移动
+                    new Thread(enemyTank).start();
+                    enemyTanks.add(enemyTank);
+                    //创建敌人坦克的同时创建子弹
+                    Shot shot = new Shot(enemyTank.getX() + 20, enemyTank.getY() + 60, enemyTank.getDirection());
+                    enemyTank.shots.add(shot);
+                    //启动子弹线程
+                    new Thread(shot).start();
+                }
+                break;
+            case "2"://继续上局游戏
+                //继续游戏，就进行数据恢复
+                nodes = Recorder.getNodesAndMyTankAndGrades();
+                tank = Recorder.getMyTank();
+                //初始化敌人的坦克
+                for (int i = 0; i < nodes.size(); i++) {
+                    Node node = nodes.get(i);
+                    enemyTank enemyTank = new enemyTank(node.getX(), node.getY());
+                    //将所有的敌人坦克信息设置给每一个敌人坦克
+                    enemyTank.setEnemyTanks(enemyTanks);
+                    enemyTank.setDirection(node.getDirection());
+                    //启动敌人坦克线程，让敌人坦克自由移动
+                    new Thread(enemyTank).start();
+                    enemyTanks.add(enemyTank);
+                    //创建敌人坦克的同时创建子弹
+                    Shot shot = new Shot(enemyTank.getX() + 20, enemyTank.getY() + 60, enemyTank.getDirection());
+                    enemyTank.shots.add(shot);
+                    //启动子弹线程
+                    new Thread(shot).start();
+                }
+                break;
+            default:
+                System.out.println("输入有误！");
         }
 
         //加载爆炸效果的图片

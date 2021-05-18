@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Scanner;
 
 /**
  * @Description : 坦克活动区域
@@ -14,13 +15,16 @@ import java.awt.event.WindowEvent;
 public class gameFrame extends JFrame {
 
     private JPanel tankPanel = null;
+    Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         new gameFrame();
     }
 
     public gameFrame() {
-        tankPanel = new tankPanel();
+        System.out.println("请输入您的选择，1：开始新游戏，2：继续上局游戏");
+        String key = scanner.next();
+        tankPanel = new tankPanel(key);
         //将tankPanel放入到Thread并启动
         new Thread((Runnable) tankPanel).start();
         this.add(tankPanel);

@@ -19,6 +19,7 @@ public class myTank extends tank {
         super(x, y);
     }
 
+
     //射击子弹
     public void Shot() {
 
