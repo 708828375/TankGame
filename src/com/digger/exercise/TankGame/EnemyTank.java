@@ -8,16 +8,16 @@ import java.util.Vector;
  * @Date : 2021/4/19 17:06
  * @Version : 1.0
  **/
-public class enemyTank extends tank implements Runnable {
+public class EnemyTank extends Tank implements Runnable {
 
     //定义敌人坦克的子弹，可以有多颗子弹，因为涉及到线程，所以定义一个Vector来存放子弹
     Vector<Shot> shots = new Vector<>();
 
     //定义一个向量存储所有的敌人坦克信息
-    private Vector<enemyTank> enemyTanks = new Vector<>();
+    private Vector<EnemyTank> EnemyTanks = new Vector<>();
 
     //创建敌人的坦克时，就初始化一个子弹对象同时启动
-    public enemyTank(int x, int y) {
+    public EnemyTank(int x, int y) {
         super(x, y);
     }
 
@@ -113,7 +113,7 @@ public class enemyTank extends tank implements Runnable {
     }
 
     public void setEnemyTanks(Vector enemyTanks) {
-        this.enemyTanks = enemyTanks;
+        this.EnemyTanks = enemyTanks;
     }
 
     //判断当前坦克是否碰到其他敌人的坦克
@@ -122,8 +122,8 @@ public class enemyTank extends tank implements Runnable {
         switch (this.getDirection()) {
             case 0://上
                 //让当前的敌人坦克和其他所有敌人坦克进行比较
-                for (int i = 0; i < enemyTanks.size(); i++) {
-                    enemyTank enemyTank = enemyTanks.get(i);
+                for (int i = 0; i < EnemyTanks.size(); i++) {
+                    EnemyTank enemyTank = EnemyTanks.get(i);
                     //不和自己进行比较
                     if (enemyTank != this) {
                         //如果敌人坦克方向是上/下
@@ -164,8 +164,8 @@ public class enemyTank extends tank implements Runnable {
                 break;
             case 1://右
                 //让当前的敌人坦克和其他所有敌人坦克进行比较
-                for (int i = 0; i < enemyTanks.size(); i++) {
-                    enemyTank enemyTank = enemyTanks.get(i);
+                for (int i = 0; i < EnemyTanks.size(); i++) {
+                    EnemyTank enemyTank = EnemyTanks.get(i);
                     //不和自己进行比较
                     if (enemyTank != this) {
                         //如果敌人坦克方向是上/下
@@ -206,8 +206,8 @@ public class enemyTank extends tank implements Runnable {
                 break;
             case 2://下
                 //让当前的敌人坦克和其他所有敌人坦克进行比较
-                for (int i = 0; i < enemyTanks.size(); i++) {
-                    enemyTank enemyTank = enemyTanks.get(i);
+                for (int i = 0; i < EnemyTanks.size(); i++) {
+                    EnemyTank enemyTank = EnemyTanks.get(i);
                     //不和自己进行比较
                     if (enemyTank != this) {
                         //如果敌人坦克方向是上/下
@@ -248,8 +248,8 @@ public class enemyTank extends tank implements Runnable {
                 break;
             case 3://左
                 //让当前的敌人坦克和其他所有敌人坦克进行比较
-                for (int i = 0; i < enemyTanks.size(); i++) {
-                    enemyTank enemyTank = enemyTanks.get(i);
+                for (int i = 0; i < EnemyTanks.size(); i++) {
+                    EnemyTank enemyTank = EnemyTanks.get(i);
                     //不和自己进行比较
                     if (enemyTank != this) {
                         //如果敌人坦克方向是上/下

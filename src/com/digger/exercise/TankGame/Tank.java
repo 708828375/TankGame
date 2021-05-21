@@ -6,7 +6,7 @@ package com.digger.exercise.TankGame;
  * @Date : 2021/4/18 20:18
  * @Version : 1.0
  **/
-public class tank {
+public class Tank {
     private int x;
     private int y;
     private int direction = 0; //0上 1右 2下 3左
@@ -46,7 +46,7 @@ public class tank {
         x -= speed;
     }
 
-    public tank(int x, int y) {
+    public Tank(int x, int y) {
         this.x = x;
         this.y = y;
     }

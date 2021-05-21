@@ -12,19 +12,19 @@ import java.util.Scanner;
  * @Date : 2021/4/18 20:20
  * @Version : 1.0
  **/
-public class gameFrame extends JFrame {
+public class GameFrame extends JFrame {
 
     private JPanel tankPanel = null;
     Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        new gameFrame();
+        new GameFrame();
     }
 
-    public gameFrame() {
+    public GameFrame() {
         System.out.println("请输入您的选择，1：开始新游戏，2：继续上局游戏");
         String key = scanner.next();
-        tankPanel = new tankPanel(key);
+        tankPanel = new GamePanel(key);
         //将tankPanel放入到Thread并启动
         new Thread((Runnable) tankPanel).start();
         this.add(tankPanel);

@@ -17,13 +17,13 @@ public class Recorder {
     private static String fileName = "src\\myRecord.txt";
 
     //定义一个Vector来保存要存储的敌人坦克信息
-    private static Vector<enemyTank> enemyTanks = null;
+    private static Vector<EnemyTank> EnemyTanks = null;
 
     //定义一个Vector用来保存从文件中恢复的敌人坦克信息
     private static Vector<Node> nodes = new Vector<>();
 
     //定义一个myTank保存我方坦克信息
-    private static myTank myTank;
+    private static MyTank myTank;
 
     private static BufferedWriter bw = null;
     private static BufferedReader br = null;
@@ -32,11 +32,11 @@ public class Recorder {
         return fileName;
     }
 
-    public static void setMyTank(com.digger.exercise.TankGame.myTank myTank) {
+    public static void setMyTank(MyTank myTank) {
         Recorder.myTank = myTank;
     }
 
-    public static com.digger.exercise.TankGame.myTank getMyTank() {
+    public static MyTank getMyTank() {
         return myTank;
     }
 
@@ -50,7 +50,7 @@ public class Recorder {
             //恢复文件中我方坦克的信息
             record = br.readLine();
             String[] xyd = record.split(" ");
-            Recorder.setMyTank(new myTank(Integer.parseInt(xyd[0]), Integer.parseInt(xyd[1])));
+            Recorder.setMyTank(new MyTank(Integer.parseInt(xyd[0]), Integer.parseInt(xyd[1])));
             myTank.setDirection(Integer.parseInt(xyd[2]));
             Node node = null;
             while ((record = br.readLine()) != null) {
@@ -75,8 +75,8 @@ public class Recorder {
         return nodes;
     }
 
-    public static void setEnemyTanks(Vector<enemyTank> enemyTanks) {
-        Recorder.enemyTanks = enemyTanks;
+    public static void setEnemyTanks(Vector<EnemyTank> EnemyTanks) {
+        Recorder.EnemyTanks = EnemyTanks;
     }
 
     //将allEnemyTankNum写入文件
@@ -90,8 +90,8 @@ public class Recorder {
             //写入我方坦克信息
             bw.write(myTank.getX() + " " + myTank.getY() + " " + myTank.getDirection() + "\r\n");
             //遍历敌人坦克的Vector，然后根据情况保存
-            for (int i = 0; i < enemyTanks.size(); i++) {
-                enemyTank enemyTank = enemyTanks.get(i);
+            for (int i = 0; i < EnemyTanks.size(); i++) {
+                EnemyTank enemyTank = EnemyTanks.get(i);
                 if (enemyTank.isLive()) {
                     //写入坦克信息
                     String record = enemyTank.getX() + " " + enemyTank.getY() + " " + enemyTank.getDirection();

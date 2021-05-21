@@ -8,14 +8,14 @@ import java.util.Vector;
  * @Date : 2021/4/18 20:19
  * @Version : 1.0
  **/
-public class myTank extends tank {
+public class MyTank extends Tank {
     //定义一个射击对象
     Shot shot = null;
 
     //可以发射多颗子弹
     Vector<Shot> shots = new Vector<>();
 
-    public myTank(int x, int y) {
+    public MyTank(int x, int y) {
         super(x, y);
     }
 
